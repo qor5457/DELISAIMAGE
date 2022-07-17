@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="DELISAIMAGE.UserControl.UCList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DELISAIMAGE.UserControl"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="Text">
+            <Border Width="290" Margin="0,5,0,0">
+                <TextBlock x:Name="TxTRow" Text="{Binding Imagepath}" TextWrapping="Wrap" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" MouseDown="RowMouseDown"/>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="Text2">
+            <Border BorderBrush="Aqua" BorderThickness="2" Height="100" Width="290">
+                <TextBlock TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0,5,0">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="- X: {0}, Y: {1}, Width: {2} Height {3}">
+                            <Binding Path="X"/>
+                            <Binding Path="Y"/>
+                            <Binding Path="Width"/>
+                            <Binding Path="Height"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Background="#262626" Orientation="Vertical">
+            <TextBlock Text = "SMALL MACHINES" FontSize="16" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#707070"/>
+            <DockPanel Margin="10,10,10,0">
+                <Button  DockPanel.Dock="Left" Width="100" Height="30" Foreground="#414141" Content="ALL REMOVE" FontSize="14"  HorizontalAlignment="Center" VerticalAlignment="Center" Background="#EB3901" Click="BtnRdClick"/>
+                <Button  DockPanel.Dock="Right" Width="100" Height="30" Foreground="#414141"   FontSize="14" Content="{Binding GrBtnContent, RelativeSource={RelativeSource AncestorType=local:UCList}}" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#BEEB01" Click="BtnGRClick"/>
+            </DockPanel>
+            <ScrollViewer x:Name="Viewer" DockPanel.Dock="Top" Height="Auto" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" CanContentScroll="true" Margin="5,0,0,0">
+                <ItemsControl  Name="ItemControl" AlternationCount="1" DataContext="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}">
+                    <ItemsControl.Style>
+                        <Style TargetType="ItemsControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Template, RelativeSource={RelativeSource AncestorType=local:UCList}}" Value="0">
+                                    <Setter Property="ItemsSource" Value="{Binding ModelImages}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Template, RelativeSource={RelativeSource AncestorType=local:UCList}}" Value="1">
+                                    <Setter Property="ItemsSource" Value="{Binding BoxLocations}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Template, RelativeSource={RelativeSource AncestorType=local:UCList}}" Value="0">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource Text}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Template, RelativeSource={RelativeSource AncestorType=local:UCList}}" Value="1">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource Text2}"/>                                  
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</UserControl>
