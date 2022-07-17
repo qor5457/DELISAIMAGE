@@ -1,1 +1,1 @@
-DELISAIMAGE
+Select point
