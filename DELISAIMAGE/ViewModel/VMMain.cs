@@ -17,6 +17,7 @@ namespace DELISAIMAGE.ViewModel
         {
             BoxLocation boxLocation = new BoxLocation()
             {
+                Name = BoxLocations.Count.ToString(),
                 Height = 100,
                 Width = 100,
                 X = 100,

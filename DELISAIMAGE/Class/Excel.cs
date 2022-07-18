@@ -3,11 +3,16 @@ using System.Data;
 using System.Diagnostics;
 using Syncfusion.XlsIO;
 
-namespace DELISAIMAGE
+namespace DELISAIMAGE.Class
 {
-    public static class Excel
+    public class Excel
     {
-        public static void Excel_Save(string filepath, DataTable dt)
+        public  Excel()
+        {
+
+        }
+
+        public void Excel_Save(DataTable dt)
         {
             try
             {
@@ -22,7 +27,7 @@ namespace DELISAIMAGE
                     DataView view = dt.DefaultView;
                     workbook.Worksheets[0].ImportDataView(view, true, 1, 1);
                     workbook.Worksheets[0].UsedRange.AutofitColumns();
-                    workbook.SaveAs(filepath);
+                    workbook.SaveAs(Folder.Filepath + "Data1.xls");
                 }
             }
             catch (Exception e)

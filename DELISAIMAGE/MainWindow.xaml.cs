@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DELISAIMAGE.Class;
 using DELISAIMAGE.Model;
 using DELISAIMAGE.UserControl;
 using DELISAIMAGE.ViewModel;
@@ -44,7 +45,7 @@ namespace DELISAIMAGE
                     {
                         Imagepath = file
                     };
-                    var select = vMMain.ModelImages.Select(x => x.Imagepath == file);
+                    var select = (vMMain.ModelImages.ToList()).FirstOrDefault(x => x.Imagepath == file);
                     if(select == null)
                         vMMain.ModelImages.Add(modelImage);
                 }
@@ -77,7 +78,12 @@ namespace DELISAIMAGE
 
         private void BtnANALYZEClick(object sender, RoutedEventArgs e)
         {
-            OpenCv.Select(vMMain.ModelImages.ToList(),vMMain.BoxLocations.ToList());
+            Task.Run(async () =>
+            {
+                var OpenCv = new OpenCv();
+                await OpenCv.Select(vMMain.ModelImages.ToList(), vMMain.BoxLocations.ToList());
+                MessageBox.Show("완료");
+            });
         }
     }
 }

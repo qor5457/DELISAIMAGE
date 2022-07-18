@@ -4,7 +4,14 @@
     <projectFile>DELISAIMAGE/DELISAIMAGE.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00db95d6-21ec-4121-a0ae-cfd2c26f4df0" name="Changes" comment="" />
+    <list default="true" id="00db95d6-21ec-4121-a0ae-cfd2c26f4df0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DELISAIMAGE/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DELISAIMAGE/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DELISAIMAGE/Excel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DELISAIMAGE/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DELISAIMAGE/MainWindow.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DELISAIMAGE/Model/MImage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DELISAIMAGE/Model/MImage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DELISAIMAGE/OpenCv.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DELISAIMAGE/ViewModel/VMMain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DELISAIMAGE/ViewModel/VMMain.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,6 +91,7 @@
       <workItem from="1657845393892" duration="1083000" />
       <workItem from="1657846833737" duration="24465000" />
       <workItem from="1657876977555" duration="8000" />
+      <workItem from="1658113545769" duration="400000" />
     </task>
     <servers />
   </component>
@@ -95,6 +103,23 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DELISAIMAGE/Class/OpenCv.cs</url>
+          <line>58</line>
+          <properties documentPath="C:\Users\Gin\Desktop\개인 깃\DELISAIMAGE\Class\OpenCv.cs" initialLine="58" containingFunctionPresentation="method 'Select'">
+            <startOffsets>
+              <option value="2374" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2434" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#System.Reflection.CustomAttributeCtorParameter" memberName="CustomAttributeEncodedArgument" />

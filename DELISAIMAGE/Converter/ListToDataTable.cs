@@ -16,23 +16,32 @@ namespace DELISAIMAGE.Converter
         {
             DataTable dataTable = new DataTable(typeof(T).Name);
             PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (PropertyInfo prop in Props)
+            foreach (var prop in Props)
             {
-                dataTable.Columns.Add(prop.Name);
+               var psd = prop.CustomAttributes.ToList().Find(x => x.AttributeType.Name == "NotDataTableColumnAttribute");
+                if (psd == null)
+                {
+                    dataTable.Columns.Add(prop.Name);
+                }
             }
+
             foreach (T item in items)
             {
-                var values = new object[Props.Length];
+                DataRow values = dataTable.NewRow();
                 for (int i = 0; i < Props.Length; i++)
                 {
-                    values[i] = Props[i].GetValue(item, null);
+                    var psd = Props[i].CustomAttributes.ToList().Find(x => x.AttributeType.Name == "NotDataTableColumnAttribute");
+                    if (psd == null)
+                    {
+                        values[Props[i].Name] = (Props[i].GetValue(item, null)).ToString();
+                    }
                 }
                 dataTable.Rows.Add(values);
             }
             return dataTable;
         }
         
-        public static DataTable MergeTablesByIndex(DataTable First, DataTable second )
+        public static DataTable MergeTablesByIndex<T>(DataTable First, DataTable second )
         {
             var firstClone = First.Clone();
             foreach (DataColumn col in second.Columns)
@@ -45,12 +54,31 @@ namespace DELISAIMAGE.Converter
                 }
                 firstClone.Columns.Add(newColumnName, col.DataType);
             }
-            var mergedRows = First.AsEnumerable().Zip(second.AsEnumerable(),
-                (r1, r2) => r1.ItemArray.Concat(r2.ItemArray).ToArray());
-            foreach (object[] rowFields in mergedRows)
-                firstClone.Rows.Add(rowFields);
- 
+            for (int i = 0; i < First.Rows.Count; i++)
+            {
+                var BlankCount = firstClone.Columns.Count - second.Columns.Count;
+                for (int j = 0; j < second.Rows.Count; j++)
+                {
+                    var row = firstClone.NewRow();
+                    if (BlankCount != 0)
+                    {
+                        row.ItemArray = First.Rows[i].ItemArray.Concat(second.Rows[j].ItemArray).ToArray();
+                        BlankCount--;
+                    }
+                    else
+                    {
+                        var secondList = second.Rows[j].ItemArray.ToList();
+                        for (int k = 0; k < firstClone.Columns.Count - second.Columns.Count; k++)
+                        {
+                            secondList.Insert(0, "");
+                        }
+                        row.ItemArray = secondList.ToArray();
+                    }
+                    firstClone.Rows.Add(row);
+                }
+            }
             return firstClone;
         }
+
     }
 }

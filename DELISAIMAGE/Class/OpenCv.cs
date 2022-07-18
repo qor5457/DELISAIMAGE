@@ -18,40 +18,53 @@ using OpenCvSharp.XImgProc;
 using OpenCvSharp.XPhoto;
 using Point = OpenCvSharp.Point;
 using Rect = OpenCvSharp.Rect;
-namespace DELISAIMAGE
+namespace DELISAIMAGE.Class
 {
-    public static class OpenCv
+    public class OpenCv
     {
-        public static async Task Select(List<ModelImage> modelImages, List<BoxLocation> boxLocations)
+        private Excel Excel;
+
+        public OpenCv()
         {
+            Excel = new Excel();
+        }
+
+        public async Task Select(List<ModelImage> modelImages, List<BoxLocation> boxLocations)
+        {
+            List<DataTable> dt = new List<DataTable>();
             foreach (var modelImage in modelImages)
             {
+                Folder.Create(modelImage.Imagepath + "Selcet");
                 foreach (var boxLocation in boxLocations)
                 {
-                    var Loadmat = Cv2.ImRead(modelImage.Imagepath,ImreadModes.Grayscale);
+                    var Loadmat = Cv2.ImRead(modelImage.Imagepath, ImreadModes.Grayscale);
                     Point[][] contours;
                     var crap = new Mat();
                     var blur = new Mat();
                     var thresh = new Mat();
+                    crap = new Mat(Loadmat, new Rect(boxLocation.X, boxLocation.Y, boxLocation.Width, boxLocation.Height));
+                    var fast = new Mat(); var fastb = FastFeatureDetector.Create(); var key2 = fastb.Detect(crap).ToList();
+                    // var kernel = Mat.Eye(1, 1, MatType.CV_8SC1);
+                    // Cv2.MorphologyEx(crap, blur, MorphTypes.Open, kernel);
+                    // Cv2.Threshold(blur, thresh, 0, 256, ThresholdTypes.Otsu);
+                    // Cv2.FindContours(thresh, out contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
+                    // for (int i = 0; i < contours.Length; i++)
+                    // {
+                    //     Cv2.DrawContours(crap, contours, i, Scalar.Blue, 2, LineTypes.AntiAlias);
+                    // }
+                    Cv2.DrawKeypoints(crap,key2,fast, Scalar.Red,DrawMatchesFlags.DrawRichKeypoints);
                     
-                    var kernel = Mat.Eye(1, 1,MatType.CV_8SC1);
-                    crap = new Mat(Loadmat, new Rect(boxLocation.X,boxLocation.Y,boxLocation.Width,boxLocation.Height)); ;
-                    Cv2.MorphologyEx(crap,blur,MorphTypes.Open,kernel);
-                    Cv2.Threshold(blur, thresh, 0, 256,ThresholdTypes.Otsu);
-                    Cv2.FindContours(thresh, out contours, out HierarchyIndex[] hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxSimple);
-                    for (int i = 0; i < contours.Length; i++)
-                    {
-                        Cv2.DrawContours(crap, contours, i, Scalar.Blue, 2, LineTypes.AntiAlias);
-                    }
-
-                    boxLocation.Count = contours.Length;
-                    crap.SaveImage(modelImage.Imagepath +"select.png");
+                    // boxLocation.Count = contours.Length;
+                    boxLocation.Count = key2.Count;
+                    crap.SaveImage( $"{Folder.Filepath}{boxLocation.Name}.png");
                 }
+                var a =(ListToDataTable.MergeTablesByIndex(modelImage, ListToDataTable.ToDataTable(boxLocations)));
             }
-            
-            DataTable dt = ListToDataTable.MergeTablesByIndex(ListToDataTable.ToDataTable(modelImages),ListToDataTable.ToDataTable(boxLocations));
-            Excel.Excel_Save(modelImages[modelImages.Count-1].Imagepath + "Select.xls",dt);
+
+            // Excel.Excel_Save(dt);
         }
+        
+        
 
         // public static async Task Select222(List<ModelImage> modelImages)
         // {
