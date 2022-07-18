@@ -16,7 +16,8 @@
             <Border BorderBrush="Aqua" BorderThickness="2" Height="100" Width="290">
                 <TextBlock TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="5,0,5,0">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="- X: {0}, Y: {1}, Width: {2} Height {3}">
+                        <MultiBinding StringFormat="-{0}  X: {1}, Y: {2}, Width: {3} Height {4}">
+                            <Binding Path="Name"/>
                             <Binding Path="X"/>
                             <Binding Path="Y"/>
                             <Binding Path="Width"/>

@@ -40,8 +40,8 @@ namespace DELISAIMAGE.Converter
             }
             return dataTable;
         }
-        
-        public static DataTable MergeTablesByIndex<T>(DataTable First, DataTable second )
+
+        public static DataTable MergeTablesByIndex(DataTable First, DataTable second )
         {
             var firstClone = First.Clone();
             foreach (DataColumn col in second.Columns)
@@ -54,6 +54,7 @@ namespace DELISAIMAGE.Converter
                 }
                 firstClone.Columns.Add(newColumnName, col.DataType);
             }
+
             for (int i = 0; i < First.Rows.Count; i++)
             {
                 var BlankCount = firstClone.Columns.Count - second.Columns.Count;
