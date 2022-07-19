@@ -41,9 +41,9 @@ namespace DELISAIMAGE.Converter
             return dataTable;
         }
 
-        public static DataTable MergeTablesByIndex(DataTable First, DataTable second )
+        public static DataTable MergeTablesByIndex(DataTable first, DataTable second )
         {
-            var firstClone = First.Clone();
+            var firstClone = first.Clone();
             foreach (DataColumn col in second.Columns)
             {
                 var newColumnName = col.ColumnName;
@@ -55,7 +55,7 @@ namespace DELISAIMAGE.Converter
                 firstClone.Columns.Add(newColumnName, col.DataType);
             }
 
-            for (int i = 0; i < First.Rows.Count; i++)
+            for (int i = 0; i < first.Rows.Count; i++)
             {
                 var BlankCount = firstClone.Columns.Count - second.Columns.Count;
                 for (int j = 0; j < second.Rows.Count; j++)
@@ -63,7 +63,7 @@ namespace DELISAIMAGE.Converter
                     var row = firstClone.NewRow();
                     if (BlankCount != 0)
                     {
-                        row.ItemArray = First.Rows[i].ItemArray.Concat(second.Rows[j].ItemArray).ToArray();
+                        row.ItemArray = first.Rows[i].ItemArray.Concat(second.Rows[j].ItemArray).ToArray();
                         BlankCount--;
                     }
                     else

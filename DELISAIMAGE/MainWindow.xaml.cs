@@ -36,7 +36,7 @@ namespace DELISAIMAGE
         {
             var openfile = new OpenFileDialog();
             openfile.Multiselect = true;
-            openfile.Filter = "Image files(*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            openfile.Filter = "Image files(*.jpg, *.jpeg, *.jpe, *.jfif, *.png,*.tiff) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png; *.tiff";
             if (openfile.ShowDialog() == true)
             {
                 foreach(var file in openfile.FileNames)
